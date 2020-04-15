@@ -7,6 +7,8 @@ import org.junit.Test;
 
 /**
  * Unit test for simple App.
+ * Used to check program compiles and runs,
+ * Will be deleted once Main has appropriate functionality
  */
 public class AppTest
 {
