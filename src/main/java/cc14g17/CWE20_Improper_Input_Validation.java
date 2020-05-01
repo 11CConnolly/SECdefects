@@ -19,16 +19,16 @@ public class CWE20_Improper_Input_Validation extends AbstractDefectiveProgram {
 
     @Override
     public void bad() throws Exception {
-        bad1(5);
+        badWithdraw(5);
     }
 
     @Override
     public void good() {
-        good1(5);
+        goodWithdraw(5);
     }
 
     //Allows a user to order a quantity of some product
-    void bad1(int amount) {
+    void badWithdraw(int amount) {
         /* FLAW negative quantity of orders should not be allowed otherwise attacker
         * can increase balance arbitrarily*/
         if (amount >= WITHDRAW_LIMIT)
@@ -36,7 +36,7 @@ public class CWE20_Improper_Input_Validation extends AbstractDefectiveProgram {
         balance = balance - amount;
     }
 
-    void good1(int amount) {
+    void goodWithdraw(int amount) {
         /* FIX only allow positive quantities by including another validation of input*/
         if (amount < 0 || amount >= WITHDRAW_LIMIT)
             return;

@@ -12,9 +12,9 @@ public class Main {
         * Run Tests
         * etc.
          */
-        CWE20_Improper_Input_Validation cwe20 = new CWE20_Improper_Input_Validation();
-        cwe20.runTests("CWE20_Improper_Input_Validation");
-        System.out.println("Finished Running code");
+        //runTestCWE20();
+        runTestCWE89();
+        System.out.println("Finished");
     }
 
     /*
@@ -22,11 +22,20 @@ public class Main {
     * Test the good method and the bad method to confirm code compiles
     * Test the bad method then to confirm that the exploit is triggered.
      */
-    private void runTestCWE20() {
+    private static void runTestCWE20() {
+        CWE20_Improper_Input_Validation cwe20 = new CWE20_Improper_Input_Validation();
+        cwe20.runTests("CWE20_Improper_Input_Validation");
+        System.out.println("Finished Running code");
         
     }
 
-    private void runTestCWEXXX() {
-
+    private static void runTestCWE89() {
+        CWE89_SQL_Injection cwe89 = new CWE89_SQL_Injection();
+        try {
+            cwe89.bad();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        cwe89.good();
     }
 }
