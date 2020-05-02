@@ -15,7 +15,7 @@ public class CWE20_Improper_Input_ValidationTest {
 
     // Test the bad code to show that it doesn't function as intended
     @Test
-    public void bad1() {
+    public void badWithdraw() {
         cwe20.badWithdraw(0);
         Assert.assertEquals(0, cwe20.getBalance(), 0.001);
 
@@ -31,7 +31,7 @@ public class CWE20_Improper_Input_ValidationTest {
 
     // Test to show program has desired functionality
     @Test
-    public void good1() {
+    public void goodWithdraw() {
         cwe20.goodWithdraw(0);
         Assert.assertEquals(0, cwe20.getBalance(), 0.001);
 
