@@ -4,7 +4,6 @@
  */
 package cc14g17;
 
-import java.io.*;
 import java.sql.*;
 import java.util.logging.Logger;
 
@@ -12,9 +11,9 @@ import java.util.logging.Logger;
 public class IO {
 
     //Constants to be able to connect to a database if required
-    private static String dbUrl = "";
-    private static String dbUsername = "";
-    private static String dbPassword = "";
+    private static String dbUrl = "jdbc:sqlite:./src/main/resources/test.db";
+    private static String dbUsername = "root";
+    private static String dbPassword = "root";
 
     //Constructor
     public static final Logger logger = Logger.getLogger("CWE_Testcases");
@@ -39,7 +38,8 @@ public class IO {
     }
 
     // Method used for getting a database connection for use in e.g. SQL injection
-    public static Connection getDBConnection() throws SQLException {
+    public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("org.sqlite.JDBC");
         return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     }
 }
