@@ -16,7 +16,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
     private boolean loggedIn = false;
 
     @Override
-    public void bad() throws Exception {
+    public void bad() {
         badLogin("admin", "admin");
     }
 
@@ -41,7 +41,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         try {
             connection = IO.getDBConnection();
 
-            // FLAW Code uses dynamically created statements from user inputs
+            /* FLAW Code uses dynamically created statements from user inputs */
             String sql = "SELECT * FROM users WHERE username = '" + username + "'AND password = '" + password + "'";
 
             Statement statement = connection.createStatement();
@@ -77,7 +77,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
 
         // returns if no username or password is supplied
         if (username == null || password == null) {
-            IO.printLine("Please write a username of password");
+            IO.printLine("Please input a username or password password");
             return;
         }
 

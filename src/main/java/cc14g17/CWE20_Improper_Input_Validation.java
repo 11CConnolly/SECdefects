@@ -18,7 +18,7 @@ public class CWE20_Improper_Input_Validation extends AbstractDefectiveProgram {
     }
 
     @Override
-    public void bad() throws Exception {
+    public void bad() {
         badWithdraw(5);
     }
 

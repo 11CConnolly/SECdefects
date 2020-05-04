@@ -1,11 +1,11 @@
 package cc14g17;
 
 public abstract class AbstractDefectiveProgram {
-    public abstract void bad() throws Exception;
+    public abstract void bad();
 
     public abstract void good();
 
-    // Run tests for good and bad method that they compile
+    // Run tests for good and bad method to check they work without errors
     void runTests(String cweName) {
         IO.printLine("Running tests for " + cweName);
 
