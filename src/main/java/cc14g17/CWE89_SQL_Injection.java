@@ -12,7 +12,6 @@ import java.sql.*;
 public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
 
     // Constants
-    private Connection sharedConnection;
     private boolean loggedIn = false;
 
     @Override
@@ -26,7 +25,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
     }
 
     // Allows SQL Injection
-    public void badLogin(String username, String password) {
+    void badLogin(String username, String password) {
 
         if (username == null || password == null) {
             IO.printLine("Please write a username of password");
@@ -61,6 +60,9 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
                 System.out.println("Bad username or password");
             }
 
+            statement.close();
+            rs.close();
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -73,7 +75,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         }
     }
 
-    public void goodLogin(String username, String password) {
+    void goodLogin(String username, String password) {
 
         // returns if no username or password is supplied
         if (username == null || password == null) {
@@ -111,6 +113,8 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
                 System.out.println("Bad username or password");
             }
 
+            preparedStatement.close();
+            rs.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -125,7 +129,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
 
     // Helper methods
     // Connect to a database and add relevant records
-    void setupDB() {
+    private void setupDB() {
 
         Connection connection = null;
         loggedIn = false;
@@ -152,6 +156,8 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
             statement.executeUpdate("INSERT INTO users (username, password) VALUES('user', 'pass')");
             statement.executeUpdate("INSERT INTO users (username, password) VALUES('admin', 'admin')");
             statement.executeUpdate("INSERT INTO users (username, password) VALUES('callum', 'connolly')");
+
+            statement.close();
 
         } catch (SQLException | ClassNotFoundException e) {
             IO.printLine(e.getMessage());
