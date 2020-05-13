@@ -1,26 +1,19 @@
 /*
 * @ description
-* IO Helper class for Reading and writing in code defects
+* Utility class for assisting in IO and database input output
  */
 package cc14g17;
 
 import java.sql.*;
-import java.util.logging.Logger;
 
 
 public class IO {
 
-    //Constants to be able to connect to a database if required
+    /** Constants to be able to connect to a database */
     private static String dbUrl = "jdbc:sqlite:./src/main/resources/test.db";
     private static String dbUsername = "root";
     private static String dbPassword = "root";
 
-    //Constructor
-    public static final Logger logger = Logger.getLogger("CWE_Testcases");
-
-    // Methods
-    // Static methods are methods we want toe expose to other classes
-    // without making an instance, usually used for utility methods such as below
     public static void printString(String string) {
         System.out.println(string);
     }
@@ -37,7 +30,11 @@ public class IO {
         printLine(String.format("%02f", doubleIn));
     }
 
-    // Method used for getting a database connection for use in e.g. SQL injection
+    /**
+     * Connects to the in-memory database with predefined credentials
+     *
+     * @return Connection
+     */
     public static Connection getDBConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         return DriverManager.getConnection(dbUrl, dbUsername, dbPassword);

@@ -60,7 +60,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>cc14g17.App</mainClass>
+                  <mainClass>cc14g17.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>
