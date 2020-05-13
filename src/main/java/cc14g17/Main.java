@@ -10,21 +10,26 @@ package cc14g17;
  */
 public class Main {
 
+    /**
+     * Test each individual CWE
+     * Runs the the good method and the bad method to confirm code compiles
+     *
+     * @param args
+     */
+
     public static void main(String[] args) {
-        System.out.println("Running Main method Main.java");
+        System.out.println("Running Main method in Main.java");
+        System.out.println("-------------");
         System.out.println("Running tests");
+        System.out.println("-------------");
         runTestCWE20();
         runTestCWE22();
         runTestCWE89();
         runTestCWE125();
+        System.out.println("----------------------");
         System.out.println("Finished running tests");
+        System.out.println("----------------------");
     }
-
-    /*
-    * Test Each individual CWE
-    * Test the good method and the bad method to confirm code compiles
-    * Test the bad method then to confirm that the exploit is triggered.
-     */
 
     private static void runTestCWE20() {
         CWE20_Improper_Input_Validation cwe20 = new CWE20_Improper_Input_Validation();
