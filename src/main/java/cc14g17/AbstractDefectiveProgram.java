@@ -5,19 +5,19 @@ public abstract class AbstractDefectiveProgram {
 
     public abstract void good();
 
-    // Run tests for good and bad method to check they work without errors
+    /**
+     *  Runs good and bad methods to each CWE to ensure they run as intended
+     *
+     * @param cweName
+     */
     void runTests(String cweName) {
+
         IO.printLine("Running tests for " + cweName);
 
         good();
         IO.printLine("Finished good() for " + cweName);
 
-        try {
-            bad();
-            IO.printLine("Finished bad() for " + cweName);
-        } catch (Exception e) {
-            IO.printLine("Caught an exception for bad() of " + cweName);
-            e.printStackTrace();
-        }
+        bad();
+        IO.printLine("Finished bad() for " + cweName);
     }
 }

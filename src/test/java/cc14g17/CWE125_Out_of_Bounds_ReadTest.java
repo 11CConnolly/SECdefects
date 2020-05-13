@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class CWE125_Out_of_Bounds_ReadTest {
 
     private CWE125_Out_of_Bounds_Read cwe125;

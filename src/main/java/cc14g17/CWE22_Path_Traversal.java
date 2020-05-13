@@ -12,13 +12,11 @@
 package cc14g17;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class CWE22_Path_Traversal extends AbstractDefectiveProgram {
 
+    /** Flag to indicate if a file has been read */
     private boolean fileRead;
 
     CWE22_Path_Traversal() {
@@ -36,11 +34,17 @@ public class CWE22_Path_Traversal extends AbstractDefectiveProgram {
     }
 
 
-    public void badRead(String userPath) {
+    /**
+     * Reads information from a given profile, but without correct path traversal checks
+     * so files that aren't meant to be read are able to be read.
+     *
+     * @param inputFilepath - text supplied by the user to indicate which profile to view
+     */
+    public void badRead(String inputFilepath) {
 
-        String relativeFilePath = "./src/main/resources/profiles/" + userPath;
+        String relativeFilepath = "./src/main/resources/profiles/" + inputFilepath;
 
-        File file = new File(relativeFilePath);
+        File file = new File(relativeFilepath);
 
         /* FLAW code doesn't limit the potential input for the file path */
 
@@ -52,7 +56,7 @@ public class CWE22_Path_Traversal extends AbstractDefectiveProgram {
             String line;
             while((line = in.readLine()) != null)
             {
-                System.out.println(line);
+                IO.printLine(line);
             }
 
             fileRead = true;
@@ -71,29 +75,35 @@ public class CWE22_Path_Traversal extends AbstractDefectiveProgram {
         fileRead = true;
     }
 
-    public void goodRead(String userPath) {
+    /**
+     * Reads information from a given profile, with checks to ensure no path traversal is
+     * being attempted.
+     *
+     * @param inputFilepath - text supplied by the user to indicate which profile to view
+     */
+    public void goodRead(String inputFilepath) {
 
-        String relativeFilePath = "src/main/resources/profiles/" + userPath;
+        String relativeFilepath = "src/main/resources/profiles/" + inputFilepath;
 
-        File file = new File(relativeFilePath);
+        File file = new File(relativeFilepath);
 
-        /* FIX check */
+        /* FIX check absolute against canonical path where canonical disregards special characters*/
 
-        String canonicalPath = null;
-        String absolutePath = null;
+        String canonicalFilepath = null;
+        String absoluteFilepath = null;
 
         try {
-            canonicalPath = file.getCanonicalPath();
-            absolutePath = file.getAbsolutePath();
+            canonicalFilepath = file.getCanonicalPath();
+            absoluteFilepath = file.getAbsolutePath();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (canonicalPath == null || absolutePath == null)
+        if (canonicalFilepath == null || absoluteFilepath == null)
             return;
 
-        if (!canonicalPath.equals(absolutePath)) {
-            System.out.println("Potential Directory Traversal");
+        if (!canonicalFilepath.equals(absoluteFilepath)) {
+            IO.printLine("Potential Directory Traversal");
             return;
         }
 
@@ -105,7 +115,7 @@ public class CWE22_Path_Traversal extends AbstractDefectiveProgram {
             String line;
             while((line = in.readLine()) != null)
             {
-                System.out.println(line);
+                IO.printLine(line);
             }
 
             fileRead = true;

@@ -1,22 +1,24 @@
 /*
  * @Description
- * Program with simple login functionality
  * CWE_ID: 89
  * CWE_Entry_Name: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')
  *
- * The software constructs all or part of an SQL command using externally-influenced input from an
- * upstream component, but it does not neutralize or incorrectly neutralizes special elements that
- * could modify the intended SQL command when it is sent to a downstream component.
- *
+ * The program constructs all or part of an SQL command using external input from an
+ * but does not neutralize special elements that could modify the intended SQL command
  */
+
 package cc14g17;
 
 import java.sql.*;
 
 public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
 
-    // Constants
-    private boolean loggedIn = false;
+    /** Flag to indicate if a login attempt has been successful. */
+    private boolean loggedIn;
+
+    CWE89_SQL_Injection() {
+        loggedIn = false;
+    }
 
     @Override
     public void bad() {
@@ -28,9 +30,16 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         goodLogin("admin", "admin");
     }
 
-    // Allows SQL Injection
-    void badLogin(String username, String password) {
+    /**
+     * Allows user to login by matching supplied username and password to table of login details.
+     * Dynamically builds query using supplied data without prepared statements allowing for SQL Injection.
+     *
+     * @param username
+     * @param password
+     */
+    public void badLogin(String username, String password) {
 
+        // returns if no username or password is supplied
         if (username == null || password == null) {
             IO.printLine("Please write a username of password");
             return;
@@ -52,16 +61,16 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
 
             ResultSet rs = statement.executeQuery(sql);
 
+            // At least one result means the username and password is valid
             if (rs.next())
             {
-                // At least one result means the username and password is valid
                 loggedIn = true;
                 // read the result set
                 IO.printLine("id = " + rs.getString("id"));
                 IO.printLine("username = " + rs.getString("username"));
                 IO.printLine("password = " + rs.getString("password"));
             } else {
-                System.out.println("Bad username or password");
+                IO.printLine("Bad username or password");
             }
 
             statement.close();
@@ -79,11 +88,18 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         }
     }
 
-    void goodLogin(String username, String password) {
+    /**
+     * Allows user to login by matching supplied username and password to table of login details.
+     * Dynamically builds query using supplied data using prepared statements preventing SQL Injection.
+     *
+     * @param username
+     * @param password
+     */
+    public void goodLogin(String username, String password) {
 
         // returns if no username or password is supplied
         if (username == null || password == null) {
-            IO.printLine("Please input a username or password password");
+            IO.printLine("Please input a username or password");
             return;
         }
 
@@ -95,7 +111,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         try {
             connection = IO.getDBConnection();
 
-            // FIX Code uses prepared statements for dynamical queries
+            // FIX Code uses prepared statements for dynamic queries
             String sql = "SELECT * FROM users WHERE username=? AND password=?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -105,16 +121,17 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
             preparedStatement.setString(2, password);
 
             ResultSet rs = preparedStatement.executeQuery();
+
+            // At least one result means the username and password is valid
             if (rs.next())
             {
-                // At least one result means the username and password is valid
                 loggedIn = true;
                 // read the result set
                 IO.printLine("id = " + rs.getString("id"));
                 IO.printLine("username = " + rs.getString("username"));
                 IO.printLine("password = " + rs.getString("password"));
             } else {
-                System.out.println("Bad username or password");
+                IO.printLine("Bad username or password");
             }
 
             preparedStatement.close();
@@ -131,8 +148,10 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
         }
     }
 
-    // Helper methods
-    // Connect to a database and add relevant records
+    /**
+     * Gets database connection, connected class to database and performs adds necessary information
+     * to enable testing and functionality of program
+     */
     private void setupDB() {
 
         Connection connection = null;
@@ -144,7 +163,7 @@ public class CWE89_SQL_Injection extends AbstractDefectiveProgram {
             // Get the connection to the database
             connection = IO.getDBConnection();
             DatabaseMetaData meta = connection.getMetaData();
-            System.out.println("Connected to database with " +  meta);
+            IO.printLine("Connected to database with " +  meta);
 
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(10);

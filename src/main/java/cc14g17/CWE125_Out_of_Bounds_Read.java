@@ -1,16 +1,16 @@
 /*
  * @Description
- * Program with simple login functionality
- * CWE_ID: 89
- * CWE_Entry_Name: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')
+ * CWE_ID: 125
+ * CWE_Entry_Name: Out-of-bounds Read
  *
- *
+ * The program reads data past the end, or before the beginning, of the intended array or buffer
  */
 
 package cc14g17;
 
 public class CWE125_Out_of_Bounds_Read extends AbstractDefectiveProgram {
 
+    /** Array of values to be later read from */
     private int[] aValues = new int[10];
 
     CWE125_Out_of_Bounds_Read() {
@@ -29,6 +29,16 @@ public class CWE125_Out_of_Bounds_Read extends AbstractDefectiveProgram {
         goodGetValue(0);
     }
 
+    /**
+     * Returns value of array by index supplied.
+     * Does not adequately check the input, so negative values can produce an error
+     * and allow for an exception to be thrown.
+     *
+     * @param index
+     * @return value
+     * @throws ArrayIndexOutOfBoundsException
+     */
+
     public int badGetValue(int index) throws ArrayIndexOutOfBoundsException {
 
         int value;
@@ -44,6 +54,13 @@ public class CWE125_Out_of_Bounds_Read extends AbstractDefectiveProgram {
         return value;
     }
 
+    /**
+     * Returns value of array by index supplied.
+     * Adequately checks input, so no error can be thrown with an out of bounds index
+     *
+     * @param index
+     * @return value
+     */
     public int goodGetValue(int index) {
 
         int value;
