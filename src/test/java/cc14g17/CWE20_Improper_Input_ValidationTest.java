@@ -13,13 +13,15 @@ public class CWE20_Improper_Input_ValidationTest {
         cwe20 = new CWE20_Improper_Input_Validation();
     }
 
-    // Test the bad code to show that it doesn't function as intended
     @Test
-    public void badWithdraw() {
-        cwe20.badWithdraw(0);
-        Assert.assertEquals(0, cwe20.getBalance(), 0.001);
-
+    public void badWithdrawExploit() {
         cwe20.badWithdraw(-100);
+        Assert.assertEquals(0, cwe20.getBalance(), 0.001);
+    }
+
+    @Test
+    public void badWithdrawFunctional() {
+        cwe20.badWithdraw(0);
         Assert.assertEquals(0, cwe20.getBalance(), 0.001);
 
         cwe20.badWithdraw(100);
@@ -29,13 +31,15 @@ public class CWE20_Improper_Input_ValidationTest {
         Assert.assertEquals(-100, cwe20.getBalance(), 0.001);
     }
 
-    // Test to show program has desired functionality
     @Test
-    public void goodWithdraw() {
-        cwe20.goodWithdraw(0);
-        Assert.assertEquals(0, cwe20.getBalance(), 0.001);
-
+    public void goodWithdrawExploit() {
         cwe20.goodWithdraw(-100);
+        Assert.assertEquals(0, cwe20.getBalance(), 0.001);
+    }
+
+    @Test
+    public void goodWithdrawFunctional() {
+        cwe20.goodWithdraw(0);
         Assert.assertEquals(0, cwe20.getBalance(), 0.001);
 
         cwe20.goodWithdraw(100);

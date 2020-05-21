@@ -14,26 +14,32 @@ public class CWE89_SQL_InjectionTest {
     public void setUp() { cwe89 = new CWE89_SQL_Injection(); }
 
     @Test
-    public void badLogin() {
-        cwe89.badLogin("incorrect", "details");
-        assertFalse(cwe89.isLoggedIn());
-
+    public void badLoginExploit() {
         cwe89.badLogin("injection", "' OR 1=1 -- ");
-        assertFalse(cwe89.isLoggedIn());
-
-        cwe89.badLogin("callum", "connolly");
-        assertTrue(cwe89.isLoggedIn());
+        Assert.assertFalse(cwe89.isLoggedIn());
     }
 
     @Test
-    public void goodLogin() {
-        cwe89.goodLogin("incorrect", "details");
-        assertFalse(cwe89.isLoggedIn());
+    public void badLoginFunctional() {
+        cwe89.badLogin("incorrect", "details");
+        Assert.assertFalse(cwe89.isLoggedIn());
 
+        cwe89.badLogin("callum", "connolly");
+        Assert.assertTrue(cwe89.isLoggedIn());
+    }
+
+    @Test
+    public void goodLoginExploit() {
         cwe89.goodLogin("injection", "' OR 1=1 -- ");
-        assertFalse(cwe89.isLoggedIn());
+        Assert.assertFalse(cwe89.isLoggedIn());
+    }
+
+    @Test
+    public void goodLoginFunctional() {
+        cwe89.goodLogin("incorrect", "details");
+        Assert.assertFalse(cwe89.isLoggedIn());
 
         cwe89.goodLogin("callum", "connolly");
-        assertTrue(cwe89.isLoggedIn());
+        Assert.assertTrue(cwe89.isLoggedIn());
     }
 }
