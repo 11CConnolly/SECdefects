@@ -14,26 +14,33 @@ public class CWE125_Out_of_Bounds_ReadTest {
     }
 
     @Test
-    public void badGetValue() {
+    public void badGetValueFunctional() {
+        Assert.assertEquals(0, cwe125.badGetValue(0));
+        Assert.assertEquals(1, cwe125.badGetValue(1));
+        Assert.assertEquals(8, cwe125.badGetValue(8));
+        Assert.assertEquals(9, cwe125.badGetValue(9));
+    }
+
+    @Test
+    public void badGetValueExploit() {
         try {
             Assert.assertEquals(-1, cwe125.badGetValue(-1));
-            Assert.assertEquals(0, cwe125.badGetValue(0));
-            Assert.assertEquals(1, cwe125.badGetValue(1));
-            Assert.assertEquals(8, cwe125.badGetValue(8));
-            Assert.assertEquals(9, cwe125.badGetValue(9));
             Assert.assertEquals(-1, cwe125.badGetValue(10));
         } catch (ArrayIndexOutOfBoundsException e) {
             Assert.fail("Exception " + e);
         }
     }
-
     @Test
-    public void goodGetValue() {
-        Assert.assertEquals(-1, cwe125.goodGetValue(-1));
+    public void goodGetValueFunctional() {
         Assert.assertEquals(0, cwe125.goodGetValue(0));
         Assert.assertEquals(1, cwe125.goodGetValue(1));
         Assert.assertEquals(8, cwe125.goodGetValue(8));
         Assert.assertEquals(9, cwe125.goodGetValue(9));
+    }
+
+    @Test
+    public void goodGetValueExploit() {
+        Assert.assertEquals(-1, cwe125.goodGetValue(-1));
         Assert.assertEquals(-1, cwe125.goodGetValue(10));
     }
 }
