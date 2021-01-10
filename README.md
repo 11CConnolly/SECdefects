@@ -1,6 +1,6 @@
 # Set of Exploitable security Code Defects
 
-A set of Security Code Defects to advance research into dynamic analysis for Vulnerability Repair. Each CWE comes with buggy code, fixed code and a test suite which exploits the defect and causes a vulnerability. Currently developing...
+A set of Security Code Defects to advance research into dynamic analysis for Vulnerability Repair. Each CWE comes with buggy code, fixed code and a test suite which exploits the defect and causes a vulnerability. 
 
 ### Prerequisites
 
